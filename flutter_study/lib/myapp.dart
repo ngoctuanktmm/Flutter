@@ -25,6 +25,7 @@ class _MyApp extends State<MyApp> {
         _transaction.amount.isNaN) {
       return;
     }
+    _transaction.createDate = DateTime.now();
     _transactions.add(_transaction);
     _transaction = Transaction(content: '', amount: 0.0);
     _contentController.text = '';
