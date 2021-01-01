@@ -20,6 +20,34 @@ class _MyApp extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _buildWidgetList() {
+      int index = 0;
+      return _transactions.map((eachTransaction) {
+        index++;
+        return Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: (index % 2) == 0 ? Colors.blue : Colors.lightGreen,
+          elevation: 10,
+          child: ListTile(
+            leading: const Icon(Icons.access_alarm),
+            title: Text(eachTransaction.content,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.white)),
+            subtitle: Text(
+              'Price: ${eachTransaction.amount}',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            onTap: () {
+              print('Your clicked: ${eachTransaction.content}');
+            },
+          ),
+        );
+      }).toList();
+    }
+
     return MaterialApp(
       title: "This is a StatefulWidget",
       home: Scaffold(
@@ -78,16 +106,7 @@ class _MyApp extends State<MyApp> {
                 ),
               ),
               Column(
-                children: _transactions.map((eachTransaction) {
-                  return ListTile(
-                    leading: const Icon(Icons.access_alarm),
-                    title: Text(eachTransaction.content),
-                    subtitle: Text('Price: ${eachTransaction.amount}'),
-                    onTap: () {
-                      print('Your clicked: ${eachTransaction.content}');
-                    },
-                  );
-                }).toList(),
+                children: _buildWidgetList(),
               )
             ],
           ),
