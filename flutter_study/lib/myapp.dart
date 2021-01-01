@@ -19,11 +19,44 @@ class _MyApp extends State<MyApp> {
   Transaction _transaction = Transaction(content: '', amount: 0.0);
   List<Transaction> _transactions = List<Transaction>();
 
+  void _insertTransaction() {
+    if (_transaction.content.isEmpty ||
+        _transaction.amount == 0.0 ||
+        _transaction.amount.isNaN) {
+      return;
+    }
+    _transactions.add(_transaction);
+    _transaction = Transaction(content: '', amount: 0.0);
+    _contentController.text = '';
+    _amountController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "This is a StatefulWidget",
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Transaction manager"),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  setState(() {
+                    this._insertTransaction();
+                  });
+                })
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Add transactions',
+          child: Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              this._insertTransaction();
+            });
+          },
+        ),
         key: _scaffoldKey,
         body: SafeArea(
             minimum: const EdgeInsets.only(left: 20, right: 20),
@@ -59,14 +92,11 @@ class _MyApp extends State<MyApp> {
                         'Insert Transaction',
                         style: TextStyle(fontSize: 18),
                       ),
-                      color: Colors.blue,
+                      color: Colors.brown,
                       textColor: Colors.white,
                       onPressed: () {
                         setState(() {
-                          _transactions.add(_transaction);
-                          _transaction = Transaction(content: '', amount: 0.0);
-                          _contentController.text = '';
-                          _amountController.text = '';
+                          this._insertTransaction();
                         });
 
                         print('transaction list: ' + _transactions.toString());
