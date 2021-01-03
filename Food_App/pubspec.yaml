@@ -64,6 +64,9 @@ flutter:
     - family: Courgette
       fonts:
         - asset: assets/fonts/Courgette/Courgette-Regular.ttf
+    - family: Redressed
+      fonts:
+        - asset: assets/fonts/Redressed/Redressed-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
