@@ -16,13 +16,15 @@ class CategoryItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Tap to categoty: ${this.category.content}');
-        Navigator.of(context).push(
+        /*Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => FoodsPage(
               category: this.category,
             ),
           ),
-        );
+        );*/
+        Navigator.pushNamed(context, FoodsPage.routeName,
+            arguments: {'category': this.category});
       },
       splashColor: Colors.deepPurple,
       child: Container(

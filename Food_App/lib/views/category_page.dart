@@ -3,6 +3,8 @@ import 'package:Food_App/views/category_item.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesPage extends StatelessWidget {
+  static const String routeName = '/CategoriesPage';
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
