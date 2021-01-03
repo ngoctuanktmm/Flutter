@@ -30,6 +30,7 @@ class CategoryItem extends StatelessWidget {
               this.category.content,
               style: TextStyle(
                   fontSize: 18,
+                  fontFamily: 'Courgette',
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
