@@ -1,6 +1,8 @@
 import 'package:Food_App/models/category.dart';
 import 'package:flutter/material.dart';
 
+import 'FoodsPage.dart';
+
 class CategoryItem extends StatelessWidget {
   Category category;
 
@@ -11,7 +13,18 @@ class CategoryItem extends StatelessWidget {
     // TODO: implement build
     Color _color = this.category.color;
 
-    return Container(
+    return InkWell(
+      onTap: () {
+        print('Tap to categoty: ${this.category.content}');
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => FoodsPage(
+              category: this.category,
+            ),
+          ),
+        );
+      },
+      splashColor: Colors.deepPurple,
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
