@@ -126,6 +126,7 @@ class _MyApp extends State<MyApp> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         tooltip: 'Add transactions',
         child: Icon(Icons.add),
         onPressed: () {
@@ -147,9 +148,9 @@ class _MyApp extends State<MyApp> {
                 child: FlatButton(
                   child: Text(
                     'Insert Transaction',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18, fontFamily: 'Pacifico'),
                   ),
-                  color: Colors.deepPurpleAccent,
+                  color: Theme.of(context).accentColor,
                   textColor: Colors.white,
                   onPressed: () {
                     this._onButtonShowModalSheet();
