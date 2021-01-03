@@ -32,88 +32,133 @@ class _MyApp extends State<MyApp> {
     _amountController.text = '';
   }
 
+  void _onButtonShowModalSheet() {
+    showModalBottomSheet(
+        context: this.context,
+        builder: (context) {
+          return Column(
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: 'Content'),
+                controller: _contentController,
+                onChanged: (text) {
+                  setState(() {
+                    _transaction.content = text;
+                  });
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount(money)'),
+                controller: _amountController,
+                onChanged: (text) {
+                  setState(() {
+                    _transaction.amount = double.tryParse(text) ?? 0;
+                  });
+                },
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Expanded(
+                      child: SizedBox(
+                        height: 50,
+                        child: RaisedButton(
+                            color: Colors.deepOrangeAccent,
+                            child: Text(
+                              'Cancel',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                            onPressed: () {}),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 50,
+                        child: RaisedButton(
+                            color: Colors.lightGreen,
+                            child: Text(
+                              'Save',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                this._insertTransaction();
+                              });
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "This is a StatefulWidget",
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Transaction manager"),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    this._insertTransaction();
-                  });
-                })
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'Add transactions',
-          child: Icon(Icons.add),
-          onPressed: () {
-            setState(() {
-              this._insertTransaction();
-            });
-          },
-        ),
-        key: _scaffoldKey,
-        body: SafeArea(
-            minimum: const EdgeInsets.only(left: 20, right: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Content'),
-                    controller: _contentController,
-                    onChanged: (text) {
-                      setState(() {
-                        _transaction.content = text;
-                      });
-                    },
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Amount(money)'),
-                    controller: _amountController,
-                    onChanged: (text) {
-                      setState(() {
-                        _transaction.amount = double.tryParse(text) ?? 0;
-                      });
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                  ),
-                  ButtonTheme(
-                    height: 50,
-                    child: FlatButton(
-                      child: Text(
-                        'Insert Transaction',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      color: Colors.brown,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          this._insertTransaction();
-                        });
-
-                        print('transaction list: ' + _transactions.toString());
-                        // Display to UI
-                        _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text(
-                              'transaction list: ' + _transactions.toString()),
-                          duration: Duration(seconds: 3),
-                        ));
-                      },
-                    ),
-                  ),
-                  TransactionList(transactions: _transactions)
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Transaction manager"),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  this._insertTransaction();
+                });
+              })
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add transactions',
+        child: Icon(Icons.add),
+        onPressed: () {
+          this._onButtonShowModalSheet();
+        },
+      ),
+      key: _scaffoldKey,
+      body: SafeArea(
+        minimum: const EdgeInsets.only(left: 20, right: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-            )),
+              ButtonTheme(
+                height: 50,
+                child: FlatButton(
+                  child: Text(
+                    'Insert Transaction',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  color: Colors.brown,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    this._onButtonShowModalSheet();
+                    print('transaction list: ' + _transactions.toString());
+                    // Display to UI
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                      content:
+                          Text('transaction list: ' + _transactions.toString()),
+                      duration: Duration(seconds: 3),
+                    ));
+                  },
+                ),
+              ),
+              TransactionList(transactions: _transactions)
+            ],
+          ),
+        ),
       ),
     );
   }
