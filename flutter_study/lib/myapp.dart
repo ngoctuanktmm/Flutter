@@ -38,23 +38,29 @@ class _MyApp extends State<MyApp> {
         builder: (context) {
           return Column(
             children: <Widget>[
-              TextField(
-                decoration: InputDecoration(labelText: 'Content'),
-                controller: _contentController,
-                onChanged: (text) {
-                  setState(() {
-                    _transaction.content = text;
-                  });
-                },
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Content'),
+                  controller: _contentController,
+                  onChanged: (text) {
+                    setState(() {
+                      _transaction.content = text;
+                    });
+                  },
+                ),
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Amount(money)'),
-                controller: _amountController,
-                onChanged: (text) {
-                  setState(() {
-                    _transaction.amount = double.tryParse(text) ?? 0;
-                  });
-                },
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Amount(money)'),
+                  controller: _amountController,
+                  onChanged: (text) {
+                    setState(() {
+                      _transaction.amount = double.tryParse(text) ?? 0;
+                    });
+                  },
+                ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
@@ -71,7 +77,9 @@ class _MyApp extends State<MyApp> {
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
-                            onPressed: () {}),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
                       ),
                     ),
                     Padding(
@@ -91,6 +99,8 @@ class _MyApp extends State<MyApp> {
                               setState(() {
                                 this._insertTransaction();
                               });
+                              // dismiss after inserting
+                              Navigator.of(context).pop();
                             }),
                       ),
                     ),
@@ -111,9 +121,7 @@ class _MyApp extends State<MyApp> {
           IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                setState(() {
-                  this._insertTransaction();
-                });
+                this._onButtonShowModalSheet();
               })
         ],
       ),
@@ -141,17 +149,10 @@ class _MyApp extends State<MyApp> {
                     'Insert Transaction',
                     style: TextStyle(fontSize: 18),
                   ),
-                  color: Colors.brown,
+                  color: Colors.deepPurpleAccent,
                   textColor: Colors.white,
                   onPressed: () {
                     this._onButtonShowModalSheet();
-                    print('transaction list: ' + _transactions.toString());
-                    // Display to UI
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      content:
-                          Text('transaction list: ' + _transactions.toString()),
-                      duration: Duration(seconds: 3),
-                    ));
                   },
                 ),
               ),
